@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gestionnaire de mots de passe</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <h2>Connexion</h2>
+    <form id="loginForm">
+      <label for="loginEmail">Email</label>
+      <input id="loginEmail" type="email" required />
+      <label for="loginPassword">Mot de passe</label>
+      <input id="loginPassword" type="password" required />
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <h2>Liste des mots de passe</h2>
+    <button id="fetchPasswordsBtn" disabled>Afficher mes mots de passe</button>
+    <pre id="passwordsList"></pre>
+    <h2>Ajouter un mot de passe</h2>
+    <form id="passwordForm">
+      <label> Service : <input type="text" id="service" required /> </label
+      ><br /><br />
+      <label>
+        Nom d'utilisateur : <input type="text" id="username" required /> </label
+      ><br /><br />
+      <label>
+        Mot de passe :
+        <input
+          type="password"
+          id="password"
+          required
+          autocomplete="new-password"
+        /> </label
+      ><br /><br />
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <script src="login.js"></script>
+  </body>
+</html>
