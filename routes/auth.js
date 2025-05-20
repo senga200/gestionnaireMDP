@@ -2,6 +2,8 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
+const authMiddleware = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -46,6 +48,11 @@ router.post("/login", async (req, res) => {
     console.error(err);
     res.status(500).send("Erreur serveur");
   }
+});
+
+// Route pour obtenir l utilisateur connecté
+router.get("/me", authMiddleware, (req, res) => {
+  res.json({ userId: req.userId });
 });
 
 module.exports = router;

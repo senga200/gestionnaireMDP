@@ -15,28 +15,12 @@
       <button type="submit">Se connecter</button>
     </form>
 
-    <h2>Liste des mots de passe</h2>
-    <button id="fetchPasswordsBtn" disabled>Afficher mes mots de passe</button>
+    <a href="dashboard.html"
+      ><button id="dashboardBtn" disabled>Tableau de bord</button></a
+    >
+    <button id="logoutBtn" disabled>Déconnexion</button>
     <pre id="passwordsList"></pre>
-    <h2>Ajouter un mot de passe</h2>
-    <form id="passwordForm">
-      <label> Service : <input type="text" id="service" required /> </label
-      ><br /><br />
-      <label>
-        Nom d'utilisateur : <input type="text" id="username" required /> </label
-      ><br /><br />
-      <label>
-        Mot de passe :
-        <input
-          type="password"
-          id="password"
-          required
-          autocomplete="new-password"
-        /> </label
-      ><br /><br />
-      <button type="submit">Ajouter</button>
-    </form>
-
+    <pre id="message"></pre>
     <script src="login.js"></script>
   </body>
 </html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Liste des mots de passe</h2>
+    <button id="fetchPasswordsBtn" disabled>Afficher mes mots de passe</button>
+    <pre id="passwordsList"></pre>
+    <h2>Ajouter un mot de passe</h2>
+    <form id="passwordForm">
+      <label> Service : <input type="text" id="service" required /> </label
+      ><br /><br />
+      <label>
+        Nom d'utilisateur : <input type="text" id="username" required /> </label
+      ><br /><br />
+      <label>
+        Mot de passe :
+        <input
+          type="password"
+          id="password"
+          required
+          autocomplete="new-password"
+        /> </label
+      ><br /><br />
+      <button type="submit">Ajouter</button>
+    </form>
+    <script src="dashboard.js"></script>
+  </body>
+</html>
