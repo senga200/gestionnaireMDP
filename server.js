@@ -27,3 +27,8 @@ db.sequelize.sync().then(() => {
     console.log(`Serveur démarré sur le port ${PORT}`);
   });
 });
+
+db.sequelize
+  .authenticate()
+  .then(() => console.log("Connexion à la BDD réussie"))
+  .catch((err) => console.error("Erreur de connexion BDD", err));

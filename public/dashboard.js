@@ -1,5 +1,6 @@
 const fetchPasswordsBtn = document.getElementById("fetchPasswordsBtn");
 const passwordsList = document.getElementById("passwordsList");
+const passwordForm = document.getElementById("passwordForm");
 
 //attendre que le DOM soit chargé avant d'exécuter le code et vérifier si l utilisateur est co
 window.addEventListener("DOMContentLoaded", async () => {
@@ -49,5 +50,42 @@ fetchPasswordsBtn.addEventListener("click", async () => {
     passwordsList.textContent = JSON.stringify(data, null, 2);
   } catch (err) {
     passwordsList.textContent = "Erreur: " + err.message;
+  }
+});
+
+passwordForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const service = document.getElementById("service").value;
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    const res = await fetch("/api/passwords", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // pour envoyer le cookie
+      body: JSON.stringify({ service, username, password }),
+    });
+
+    if (!res.ok) {
+      const error = await res.text();
+      alert("Erreur : " + error);
+      return;
+    }
+
+    const data = await res.json();
+    alert("Mot de passe ajouté !");
+    console.log("Ajouté :", data);
+
+    // reinitialise le form
+    passwordForm.reset();
+
+    // refresh la liste direct
+    fetchPasswordsBtn.click();
+  } catch (err) {
+    alert("Erreur : " + err.message);
   }
 });
