@@ -25,6 +25,36 @@ router.post("/", auth, async (req, res) => {
   res.status(201).json(newPassword);
 });
 
+router.delete("/:id", auth, async (req, res) => {
+  const { id } = req.params;
+  const deletedCount = await Password.destroy({
+    where: { id, userId: req.userId },
+  });
+
+  if (deletedCount === 0) {
+    return res.status(404).send("Mot de passe non trouvé ou non autorisé");
+  }
+
+  res.status(204).send();
+});
+
+router.put("/:id", auth, async (req, res) => {
+  const { id } = req.params;
+  const { service, username, password } = req.body;
+
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv(algorithm, key, iv);
+  let encrypted = cipher.update(password, "utf8", "hex");
+  encrypted += cipher.final("hex");
+
+  await Password.update(
+    { service, username, password: encrypted, iv: iv.toString("hex") },
+    { where: { id, userId: req.userId } }
+  );
+
+  res.status(200).send();
+});
+
 router.get("/", auth, async (req, res) => {
   const data = await Password.findAll({ where: { userId: req.userId } });
 

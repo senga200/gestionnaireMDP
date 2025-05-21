@@ -1,6 +1,9 @@
 const fetchPasswordsBtn = document.getElementById("fetchPasswordsBtn");
 const passwordsList = document.getElementById("passwordsList");
 const passwordForm = document.getElementById("passwordForm");
+const searchService = document.getElementById("searchService");
+const searchResults = document.getElementById("searchResults");
+const deletePasswordForm = document.getElementById("deletePasswordForm");
 
 //attendre que le DOM soit chargé avant d'exécuter le code et vérifier si l utilisateur est co
 window.addEventListener("DOMContentLoaded", async () => {
@@ -25,6 +28,41 @@ window.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "/login.html";
   }
 });
+//rechercher un mot de passe
+searchService.addEventListener("input", async (e) => {
+  e.preventDefault();
+  const input = searchService.value.toLowerCase();
+  let results = [];
+
+  if (input.length > 2) {
+    try {
+      const res = await fetch("/api/passwords", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // pour envoyer le cookie
+      });
+
+      if (!res.ok) {
+        passwordsList.textContent =
+          "Erreur lors de la récupération des mots de passe";
+        return;
+      }
+
+      const data = await res.json();
+      results = data.filter((password) =>
+        password.service.toLowerCase().includes(input)
+      );
+      console.log("Résultats de la recherche:", results);
+      searchResults.textContent = JSON.stringify(results, null, 2);
+    } catch (err) {
+      passwordsList.textContent = "Erreur: " + err.message;
+    }
+  }
+});
+
+//afficher les mots de passe
 fetchPasswordsBtn.addEventListener("click", async () => {
   // on n'a plus accès au token car on ne l'envoie plus dans les headers donc on ne le stocke plus et du coup renvoie null
   //   if (!token) {
@@ -52,7 +90,7 @@ fetchPasswordsBtn.addEventListener("click", async () => {
     passwordsList.textContent = "Erreur: " + err.message;
   }
 });
-
+//ajouter un mot de passe
 passwordForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -88,4 +126,11 @@ passwordForm.addEventListener("submit", async (e) => {
   } catch (err) {
     alert("Erreur : " + err.message);
   }
+});
+
+//supprimer un mot de passe
+deletePasswordForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  console.log("future feature");
 });

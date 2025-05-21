@@ -1,32 +1,204 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Tableau de bord</title>
   </head>
   <body>
+    <h1>Tableau de bord</h1>
+    <button id="logoutBtn">Déconnexion</button>
+
+    <h2>Rechercher un mot de passe</h2>
+    <form id="searchForm">
+      <label for="searchService">Service</label>
+      <input
+        id="searchService"
+        type="text"
+        name="searchService"
+        placeholder="Service"
+        autocomplete="organization"
+        required
+      />
+      <button type="submit">Rechercher</button>
+    </form>
+    <div id="searchResults"></div>
+
     <h2>Liste des mots de passe</h2>
     <button id="fetchPasswordsBtn" disabled>Afficher mes mots de passe</button>
+    <div class="Display">
+      <input
+        type="checkbox"
+        id="showPassword"
+        onclick="togglePasswordVisibility()"
+      />
+      <label for="showPassword">Afficher le mot de passe</label>
+    </div>
     <pre id="passwordsList"></pre>
+
     <h2>Ajouter un mot de passe</h2>
     <form id="passwordForm">
-      <label> Service : <input type="text" id="service" required /> </label
-      ><br /><br />
-      <label>
-        Nom d'utilisateur : <input type="text" id="username" required /> </label
-      ><br /><br />
-      <label>
-        Mot de passe :
+      <label
+        >Service :
         <input
-          type="password"
-          id="password"
+          type="text"
+          id="service"
           required
-          autocomplete="new-password"
-        /> </label
+          autocomplete="organization" /></label
       ><br /><br />
+      <label
+        >Nom d'utilisateur :
+        <input
+          type="text"
+          id="username"
+          required
+          autocompete="username" /></label
+      ><br /><br />
+      <label>Mot de passe :</label><br />
+      <input
+        type="password"
+        id="password"
+        required
+        autocomplete="new-password"
+      /><br /><br />
       <button type="submit">Ajouter</button>
     </form>
+
+    <h2>Modifier un mot de passe</h2>
+    <form id="updatePasswordForm">
+      <label for="updateService">Service</label>
+      <input
+        id="updateService"
+        type="text"
+        name="updateService"
+        required
+        autocomplete="organization"
+      />
+      <label for="updateUsername">Nom d'utilisateur</label>
+      <input
+        id="updateUsername"
+        type="text"
+        name="updateUsername"
+        required
+        autocomplete="username"
+      />
+      <label for="updatePassword">Nouveau mot de passe</label>
+      <input
+        id="updatePassword"
+        type="password"
+        name="updatePassword"
+        required
+        autocomplete="new-password"
+      />
+      <button type="submit">Modifier</button>
+    </form>
+
+    <h2>Supprimer un mot de passe</h2>
+    <form id="deletePasswordForm">
+      <label for="deleteService">Service</label>
+      <input
+        id="deleteService"
+        type="text"
+        name="deleteService"
+        required
+        autocomplete="organization"
+      />
+      <button type="submit">Supprimer</button>
+    </form>
+
+    <h2>Changer le mot de passe principal</h2>
+    <form id="changeMasterPasswordForm">
+      <label for="oldMasterPassword">Ancien mot de passe principal</label>
+      <input
+        id="oldMasterPassword"
+        type="password"
+        name="oldMasterPassword"
+        required
+        autocomplete="current-password"
+      />
+      <label for="newMasterPassword">Nouveau mot de passe principal</label>
+      <input
+        id="newMasterPassword"
+        type="password"
+        name="newMasterPassword"
+        required
+        autocomplete="new-password"
+      />
+      <button type="submit">Changer</button>
+    </form>
+
+    <h2>Exporter les mots de passe</h2>
+    <button id="exportPasswordsBtn" disabled>Exporter</button>
+
+    <h2>Importer des mots de passe</h2>
+    <form id="importForm">
+      <label for="importFile">Fichier d'importation</label>
+      <input
+        id="importFile"
+        type="file"
+        name="importFile"
+        accept=".json"
+        required
+        autocomplete=""
+      />
+      <button type="submit">Importer</button>
+    </form>
+
+    <h2>Vérifier la force du mot de passe</h2>
+    <form id="checkPasswordForm">
+      <label for="checkPassword">Mot de passe</label>
+      <input
+        id="checkPassword"
+        type="password"
+        name="checkPassword"
+        required
+        autocomplete="current-password"
+      />
+      <button type="submit">Vérifier</button>
+    </form>
+    <div id="passwordStrength"></div>
+
+    <h2>Générer un mot de passe</h2>
+    <form id="generatePasswordForm">
+      <label for="passwordLength">Longueur du mot de passe</label>
+      <input
+        id="passwordLength"
+        type="number"
+        name="passwordLength"
+        required
+        autocomplete="current-password"
+      />
+      <button type="submit">Générer</button>
+    </form>
+    <div id="generatedPassword"></div>
+
+    <h2>Vérifier si un mot de passe a été compromis</h2>
+    <form id="checkCompromisedPasswordForm">
+      <label for="compromisedPassword">Mot de passe</label>
+      <input
+        id="compromisedPassword"
+        type="password"
+        name="compromisedPassword"
+        required
+        autocomplete="current-password"
+      />
+      <button type="submit">Vérifier</button>
+    </form>
+    <div id="compromisedPasswordResult"></div>
+
+    <h2>Journal de connexions</h2>
+    <button id="fetchLoginHistoryBtn" disabled>Afficher le journal</button>
+    <pre id="loginHistory"></pre>
+
+    <script>
+      function togglePasswordVisibility() {
+        const passwordInput = document.getElementById("password");
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+        } else {
+          passwordInput.type = "password";
+        }
+      }
+    </script>
     <script src="dashboard.js"></script>
   </body>
 </html>
