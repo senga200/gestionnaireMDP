@@ -11,10 +11,10 @@ router.post("/register", async (req, res) => {
   try {
     const hash = await bcrypt.hash(password, 10);
     await User.create({ email, password: hash });
-    res.status(201).send("Utilisateur créé");
+    res.status(201).json({ message: "Utilisateur créé" });
   } catch (err) {
     console.error(err);
-    res.status(400).send("Erreur lors de l’enregistrement");
+    res.status(400).json({ message: "Erreur lors de l’enregistrement" });
   }
 });
 
