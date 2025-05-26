@@ -42,7 +42,20 @@ node server.js
 ```
 docker exec -it gestionnaire_postgres
 se connecter  : 
-psql -U user -d gestionnaire
+psql -U admin -d gestionnaire
+voir les tables :
+\dt
+puis la requete sql :
+SELECT * FROM "Users";
+Sequelize crée les colonnes createdAt et updatedAt, donc à remplir.
+INSERT INTO "Users" (email, password, "createdAt", "updatedAt") 
+VALUES ('testFromInsertInto', '123456', NOW(), NOW());
+MAIS attention, le mot de passe est en clair, il faut le hasher avant de l’insérer dans la base de données.
+on peut le faire via node.js :
+const bcrypt = require("bcrypt");
+bcrypt.hash("123456", 10).then(console.log);
+ce qui va renvoyer un hash du mot de passe, qu’on peut ensuite insérer dans la base de données.
+
 ```
 
 **travail sur le chiffrement** :
@@ -58,6 +71,7 @@ C’est une clé secrète utilisée pour chiffrer et déchiffrer les mots de pas
 Utiliser un chiffrement symétrique comme AES-256-CBC permet de chiffrer le mot de passe avant de l’enregistrer puis de le déchiffrer pour le montrer ou l’utiliser
 
 ## Routes
+- Auth 
 route /me : 
 création d’un middleware pour gérer et sécuriser la route /me : seul un utilisateur authentifié accède à ses infos. Il vérifie que l’utilisateur est connecté via un JWT stocké dans un cookie, et fournit à la suite de la requête (req.userId) l’ID de l’utilisateur authentifié.
 (nb module.exports pour exporter le middleware)
@@ -75,6 +89,17 @@ bcrypt.compare() pour vérifier si le mot de passe fourni = hash stocké.
 Émettre un token JWT uniquement si les identifiants sont valides
 (   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {expiresIn: "1d", }); ) => 1 jour mais on peut modifier (cf https://github.com/auth0/node-jsonwebtoken?tab=readme-ov-file#readme) 
      -	Envoie le token dans un cookie HttpOnly
+
+
+- passwords
+GET /passwords
+récupère tous les mots de passe de l’utilisateur authentifié
+POST /passwords
+crée un nouveau mot de passe pour l’utilisateur authentifié
+PUT /passwords/:id
+met à jour un mot de passe existant pour l’utilisateur authentifié
+DELETE /passwords/:id
+récupère un mot de passe spécifique de l’utilisateur authentifié
 
 
 

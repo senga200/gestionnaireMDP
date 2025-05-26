@@ -74,6 +74,8 @@ router.get("/", auth, async (req, res) => {
     };
   });
 
+  console.log("hello le get");
+
   res.json(decryptedData);
 });
 

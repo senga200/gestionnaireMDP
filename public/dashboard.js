@@ -46,7 +46,7 @@ searchService.addEventListener("input", async (e) => {
 
       if (!res.ok) {
         passwordsList.textContent =
-          "Erreur lors de la récupération des mots de passe";
+          "Erreur lors de la récupération du mot de passe";
         return;
       }
 
@@ -54,7 +54,7 @@ searchService.addEventListener("input", async (e) => {
       results = data.filter((password) =>
         password.service.toLowerCase().includes(input)
       );
-      console.log("Résultats de la recherche:", results);
+      console.log("Résultats du get passwords :", results);
       searchResults.textContent = JSON.stringify(results, null, 2);
     } catch (err) {
       passwordsList.textContent = "Erreur: " + err.message;
@@ -64,6 +64,7 @@ searchService.addEventListener("input", async (e) => {
 
 //afficher les mots de passe
 fetchPasswordsBtn.addEventListener("click", async () => {
+  e.preventDefault();
   // on n'a plus accès au token car on ne l'envoie plus dans les headers donc on ne le stocke plus et du coup renvoie null
   //   if (!token) {
   //     passwordsList.textContent = "Tu dois te connecter d'abord";
@@ -86,6 +87,7 @@ fetchPasswordsBtn.addEventListener("click", async () => {
     fetchPasswordsBtn.disabled = false;
 
     passwordsList.textContent = JSON.stringify(data, null, 2);
+    console.log("Mots de passe récupérés :", data);
   } catch (err) {
     passwordsList.textContent = "Erreur: " + err.message;
   }
@@ -132,5 +134,48 @@ passwordForm.addEventListener("submit", async (e) => {
 deletePasswordForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  console.log("future feature");
+  const serviceToDelete = deleteService.value.toLowerCase();
+
+  try {
+    // 1. Récupère tous les mots de passe de l'utilisateur parce qu'il faut l'id pour supprimer
+    const res = await fetch("/api/passwords", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      alert("Erreur lors de la récupération des mots de passe");
+      return;
+    }
+
+    const passwords = await res.json();
+
+    // 2. quel est le mot de passe qui correspond au service
+    const passwordEntry = passwords.find(
+      (p) => p.service.toLowerCase() === serviceToDelete
+    );
+
+    if (!passwordEntry) {
+      alert("Service non trouvé.");
+      return;
+    }
+
+    // 3. go supprimer
+    const deleteRes = await fetch(`/api/passwords/${passwordEntry.id}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (deleteRes.status === 204) {
+      alert("Mot de passe supprimé avec succès.");
+      deleteService.value = "";
+    } else {
+      alert("Erreur lors de la suppression.");
+    }
+  } catch (err) {
+    alert("Erreur: " + err.message);
+  }
 });
