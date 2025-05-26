@@ -2,6 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Tableau de bord</title>
   </head>
   <body>
@@ -106,27 +107,17 @@
     </form>
 
     <h2>Changer le mot de passe principal</h2>
-    <form id="changeMasterPasswordForm">
-      <label for="oldMasterPassword">Ancien mot de passe principal</label>
-      <input
-        id="oldMasterPassword"
-        type="password"
-        name="oldMasterPassword"
-        required
-        autocomplete="current-password"
-      />
-      <label for="newMasterPassword">Nouveau mot de passe principal</label>
-      <input
-        id="newMasterPassword"
-        type="password"
-        name="newMasterPassword"
-        required
-        autocomplete="new-password"
-      />
+    <form id="changeMasterForm">
+      <label for="currentPassword">Mot de passe actuel</label>
+      <input type="password" id="currentPassword" required />
+
+      <label for="newPassword">Nouveau mot de passe</label>
+      <input type="password" id="newPassword" required />
+
       <button type="submit">Changer</button>
     </form>
 
-    <h2>Générer un mot de passe</h2>
+    <!-- <h2>Générer un mot de passe</h2>
     <form id="generatePasswordForm">
       <label for="passwordLength">Longueur du mot de passe</label>
       <input
@@ -156,7 +147,7 @@
 
     <h2>Journal de connexions</h2>
     <button id="fetchLoginHistoryBtn" disabled>Afficher le journal</button>
-    <pre id="loginHistory"></pre>
+    <pre id="loginHistory"></pre> -->
 
     <script>
       function togglePasswordVisibility() {

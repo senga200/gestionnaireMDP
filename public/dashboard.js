@@ -63,7 +63,7 @@ searchService.addEventListener("input", async (e) => {
 });
 
 //afficher les mots de passe
-fetchPasswordsBtn.addEventListener("click", async () => {
+fetchPasswordsBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   // on n'a plus accès au token car on ne l'envoie plus dans les headers donc on ne le stocke plus et du coup renvoie null
   //   if (!token) {
@@ -130,6 +130,70 @@ passwordForm.addEventListener("submit", async (e) => {
   }
 });
 
+// Modifier un mot de passe
+const updatePasswordForm = document.getElementById("updatePasswordForm");
+updatePasswordForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const serviceToUpdate = document
+    .getElementById("updateService")
+    .value.toLowerCase();
+  const newUsername = document.getElementById("updateUsername").value;
+  const newPassword = document.getElementById("updatePassword").value;
+
+  try {
+    // 1. Récupère tous les mots de passe de l'utilisateur parce qu'il faut l'id pour mettre à jour
+    const res = await fetch("/api/passwords", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      alert("Erreur lors de la récupération des mots de passe");
+      return;
+    }
+
+    const passwords = await res.json();
+
+    // 2. quel mot de passe correspond au service ?
+    const passwordEntry = passwords.find(
+      (p) => p.service.toLowerCase() === serviceToUpdate
+    );
+
+    if (!passwordEntry) {
+      alert("Service non trouvé.");
+      return;
+    }
+
+    // 3. go mettre à jour
+    const updateRes = await fetch(`/api/passwords/${passwordEntry.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        service: serviceToUpdate,
+        username: newUsername,
+        password: newPassword,
+      }),
+    });
+
+    if (updateRes.ok) {
+      alert("Mot de passe mis à jour avec succès.");
+      updatePasswordForm.reset();
+      fetchPasswordsBtn.click(); // refresh la liste
+    } else {
+      alert("Erreur lors de la mise à jour du mot de passe.");
+    }
+  } catch (err) {
+    alert("Erreur: " + err.message);
+  }
+});
+
 //supprimer un mot de passe
 deletePasswordForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -178,4 +242,12 @@ deletePasswordForm.addEventListener("submit", async (e) => {
   } catch (err) {
     alert("Erreur: " + err.message);
   }
+});
+
+// change le mot de passe de l'utilisateur
+const changePasswordForm = document.getElementById("changeMasterForm");
+
+changePasswordForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  console.log(" future feature");
 });

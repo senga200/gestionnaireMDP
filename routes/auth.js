@@ -55,4 +55,10 @@ router.get("/me", authMiddleware, (req, res) => {
   res.json({ userId: req.userId });
 });
 
+// Route pour modifier le mot de passe
+router.put("/update-password", (req, res) => {
+  console.log("future feature");
+  res.send("OK");
+});
+
 module.exports = router;
