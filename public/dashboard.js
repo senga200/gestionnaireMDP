@@ -251,3 +251,25 @@ changePasswordForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   console.log(" future feature");
 });
+
+//deconnexion
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include", // pour envoyer le cookie
+    });
+
+    if (res.ok) {
+      alert("Déconnexion réussie.");
+      window.location.href = "/login.html"; // redirige vers la page de connexion
+    } else {
+      alert("Erreur lors de la déconnexion.");
+    }
+  } catch (err) {
+    alert("Erreur: " + err.message);
+  }
+});

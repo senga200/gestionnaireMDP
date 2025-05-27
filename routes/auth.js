@@ -61,4 +61,10 @@ router.put("/update-password", (req, res) => {
   res.send("OK");
 });
 
+// Route pour déconnexion
+router.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Déconnecté avec succès" });
+});
+
 module.exports = router;
