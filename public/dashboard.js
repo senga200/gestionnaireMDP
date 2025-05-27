@@ -265,7 +265,7 @@ logoutBtn.addEventListener("click", async (e) => {
 
     if (res.ok) {
       alert("Déconnexion réussie.");
-      window.location.href = "/login.html"; // redirige vers la page de connexion
+      window.location.href = "/index.html"; // redirige vers la page de connexion
     } else {
       alert("Erreur lors de la déconnexion.");
     }

@@ -2,8 +2,9 @@ let token = null;
 
 const loginForm = document.getElementById("loginForm");
 const message = document.getElementById("message");
-const logoutBtn = document.getElementById("logoutBtn");
-const dashboardBtn = document.getElementById("dashboardBtn");
+
+//display none sur message
+message.style.display = "none";
 
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -25,9 +26,9 @@ loginForm.addEventListener("submit", async (e) => {
     const data = await res.json();
     token = data.token;
     message.textContent = "Connecté avec succès !\nToken stocké.";
-    dashboardBtn.disabled = false;
-    logoutBtn.disabled = false;
+    window.location.href = "/dashboard.html";
   } catch (err) {
+    message.style.display = "block";
     message.textContent = "Erreur: " + err.message;
   }
 });
