@@ -5,12 +5,36 @@ body {
     margin: 0;
     padding: 1rem;
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    background: #0085b5;
+    width: 80%;
+    color: white;
+    padding: 1rem;
+
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
     color: #222;
     margin-top: 2rem;
     font-size: 1.4rem;
+}
+
+.container {
+    width: 300px;
+    margin: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 form {
@@ -39,8 +63,8 @@ input {
 
 button {
     display: inline-block;
-    background: #007bff;
-    color: white;
+    background: #00bcd4;
+    color: rgb(34, 34, 34);
     border: none;
     padding: 0.6rem 1.2rem;
     border-radius: 6px;
@@ -68,9 +92,7 @@ pre {
     gap: 0.5rem;
 }
 
-#searchResults,
-#generatedPassword,
-#compromisedPasswordResult {
+#searchResults {
     margin-top: 1rem;
     background: #fff;
     padding: 0.8rem;
@@ -97,5 +119,9 @@ pre {
 
     h2 {
         font-size: 1.3rem;
+    }
+
+    .container {
+        width: 500px;
     }
 }

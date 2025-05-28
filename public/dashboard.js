@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     if (res.ok) {
       const data = await res.json();
-      passwordsList.textContent = JSON.stringify(data, null, 2);
+      passwordsList.style.display = "none";
       fetchPasswordsBtn.disabled = false;
       console.log("Connecté en tant qu'utilisateur avec ID: " + data.userId);
     } else {
@@ -55,7 +55,16 @@ searchService.addEventListener("input", async (e) => {
         password.service.toLowerCase().includes(input)
       );
       console.log("Résultats du get passwords :", results);
-      searchResults.textContent = JSON.stringify(results, null, 2);
+      searchResults.textContent = "";
+      if (results.length > 0) {
+        results.forEach((password) => {
+          const li = document.createElement("li");
+          li.textContent = `${password.service} - ${password.username}`;
+          searchResults.appendChild(li);
+        });
+      } else {
+        searchResults.textContent = "Aucun mot de passe trouvé.";
+      }
     } catch (err) {
       passwordsList.textContent = "Erreur: " + err.message;
     }
@@ -63,6 +72,7 @@ searchService.addEventListener("input", async (e) => {
 });
 
 //afficher les mots de passe
+let isPasswordListVisible = false;
 fetchPasswordsBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   // on n'a plus accès au token car on ne l'envoie plus dans les headers donc on ne le stocke plus et du coup renvoie null
@@ -70,6 +80,14 @@ fetchPasswordsBtn.addEventListener("click", async (e) => {
   //     passwordsList.textContent = "Tu dois te connecter d'abord";
   //     return;
   //   }
+
+  // Si déjà visible, on masque et on errete là
+  if (isPasswordListVisible) {
+    passwordsList.style.display = "none";
+    fetchPasswordsBtn.textContent = "afficher les mots de passe";
+    isPasswordListVisible = false;
+    return;
+  }
 
   try {
     const res = await fetch("/api/passwords", {
@@ -88,10 +106,15 @@ fetchPasswordsBtn.addEventListener("click", async (e) => {
 
     passwordsList.textContent = JSON.stringify(data, null, 2);
     console.log("Mots de passe récupérés :", data);
+    passwordsList.style.display = "block";
+    isPasswordListVisible = true;
+    fetchPasswordsBtn.textContent = "Masquer les mots de passe";
+    console.log("Mots de passe récupérés :", data);
   } catch (err) {
     passwordsList.textContent = "Erreur: " + err.message;
   }
 });
+
 //ajouter un mot de passe
 passwordForm.addEventListener("submit", async (e) => {
   e.preventDefault();

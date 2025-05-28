@@ -6,116 +6,119 @@
     <title>Tableau de bord</title>
   </head>
   <body>
-    <h1>Tableau de bord</h1>
-    <button id="logoutBtn">Déconnexion</button>
-
-    <h2>Rechercher un mot de passe</h2>
-    <form id="searchForm">
-      <label for="searchService">Service</label>
-      <input
-        id="searchService"
-        type="text"
-        name="searchService"
-        placeholder="Service"
-        autocomplete="organization"
-        required
-      />
-      <button type="submit">Rechercher</button>
-    </form>
-    <div id="searchResults"></div>
-
-    <h2>Liste des mots de passe</h2>
-    <button id="fetchPasswordsBtn" disabled>Afficher mes mots de passe</button>
-    <div class="Display">
-      <input
-        type="checkbox"
-        id="showPassword"
-        onclick="togglePasswordVisibility()"
-      />
-      <label for="showPassword">Afficher le mot de passe</label>
+    <div class="header">
+      <h1>Tableau de bord</h1>
+      <button id="logoutBtn">Déconnexion</button>
     </div>
-    <pre id="passwordsList"></pre>
-
-    <h2>Ajouter un mot de passe</h2>
-    <form id="passwordForm">
-      <label
-        >Service :
+    <div class="container">
+      <h2>Rechercher un mot de passe</h2>
+      <form id="searchForm">
+        <label for="searchService">Service</label>
         <input
+          id="searchService"
           type="text"
-          id="service"
+          name="searchService"
+          placeholder="Service"
+          autocomplete="organization"
           required
-          autocomplete="organization" /></label
-      ><br /><br />
-      <label
-        >Nom d'utilisateur :
+        />
+      </form>
+      <div id="searchResults"></div>
+    </div>
+    <div class="container">
+      <h2>Liste des mots de passe</h2>
+      <button id="fetchPasswordsBtn" disabled>
+        Afficher mes mots de passe
+      </button>
+
+      <pre id="passwordsList"></pre>
+    </div>
+    <div class="container">
+      <h2>Ajouter un mot de passe</h2>
+      <form id="passwordForm">
+        <label
+          >Service :
+          <input
+            type="text"
+            id="service"
+            required
+            autocomplete="organization" /></label
+        ><br /><br />
+        <label
+          >Nom d'utilisateur :
+          <input
+            type="text"
+            id="username"
+            required
+            autocompete="username" /></label
+        ><br /><br />
+        <label>Mot de passe :</label><br />
         <input
-          type="text"
-          id="username"
+          type="password"
+          id="password"
           required
-          autocompete="username" /></label
-      ><br /><br />
-      <label>Mot de passe :</label><br />
-      <input
-        type="password"
-        id="password"
-        required
-        autocomplete="new-password"
-      /><br /><br />
-      <button type="submit">Ajouter</button>
-    </form>
+          autocomplete="new-password"
+        /><br /><br />
+        <button type="submit">Ajouter</button>
+      </form>
+    </div>
+    <div class="container">
+      <h2>Modifier un mot de passe</h2>
+      <form id="updatePasswordForm">
+        <label for="updateService">Service</label>
+        <input
+          id="updateService"
+          type="text"
+          name="updateService"
+          required
+          autocomplete="organization"
+        />
+        <label for="updateUsername">Nom d'utilisateur</label>
+        <input
+          id="updateUsername"
+          type="text"
+          name="updateUsername"
+          required
+          autocomplete="username"
+        />
+        <label for="updatePassword">Nouveau mot de passe</label>
+        <input
+          id="updatePassword"
+          type="password"
+          name="updatePassword"
+          required
+          autocomplete="new-password"
+        />
+        <button type="submit">Modifier</button>
+      </form>
+    </div>
 
-    <h2>Modifier un mot de passe</h2>
-    <form id="updatePasswordForm">
-      <label for="updateService">Service</label>
-      <input
-        id="updateService"
-        type="text"
-        name="updateService"
-        required
-        autocomplete="organization"
-      />
-      <label for="updateUsername">Nom d'utilisateur</label>
-      <input
-        id="updateUsername"
-        type="text"
-        name="updateUsername"
-        required
-        autocomplete="username"
-      />
-      <label for="updatePassword">Nouveau mot de passe</label>
-      <input
-        id="updatePassword"
-        type="password"
-        name="updatePassword"
-        required
-        autocomplete="new-password"
-      />
-      <button type="submit">Modifier</button>
-    </form>
+    <div class="container">
+      <h2>Supprimer un mot de passe</h2>
+      <form id="deletePasswordForm">
+        <label for="deleteService">Service</label>
+        <input
+          id="deleteService"
+          type="text"
+          name="deleteService"
+          required
+          autocomplete="organization"
+        />
+        <button type="submit">Supprimer</button>
+      </form>
+    </div>
+    <div class="container">
+      <h2>Changer le mot de passe principal</h2>
+      <form id="changeMasterForm">
+        <label for="currentPassword">Mot de passe actuel</label>
+        <input type="password" id="currentPassword" required />
 
-    <h2>Supprimer un mot de passe</h2>
-    <form id="deletePasswordForm">
-      <label for="deleteService">Service</label>
-      <input
-        id="deleteService"
-        type="text"
-        name="deleteService"
-        required
-        autocomplete="organization"
-      />
-      <button type="submit">Supprimer</button>
-    </form>
+        <label for="newPassword">Nouveau mot de passe</label>
+        <input type="password" id="newPassword" required />
 
-    <h2>Changer le mot de passe principal</h2>
-    <form id="changeMasterForm">
-      <label for="currentPassword">Mot de passe actuel</label>
-      <input type="password" id="currentPassword" required />
-
-      <label for="newPassword">Nouveau mot de passe</label>
-      <input type="password" id="newPassword" required />
-
-      <button type="submit">Changer</button>
-    </form>
+        <button type="submit">Changer</button>
+      </form>
+    </div>
 
     <!-- <h2>Générer un mot de passe</h2>
     <form id="generatePasswordForm">
