@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3000;
 
 // Sync DB
 db.sequelize.sync().then(() => {
-  console.log("Base de données synchronisée");
+  console.log("Base de données t es  synchro sequelize");
   app.listen(PORT, () => {
     console.log(`Serveur démarré sur le port ${PORT}`);
   });

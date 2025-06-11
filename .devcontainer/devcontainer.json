@@ -1,3 +1,5 @@
+// pour le codespace de github. pas sure que ca fonctionne tres bien
+
 {
   "name": "node-express-postgres",
   "dockerComposeFile": "../docker-compose.yml",
