@@ -24,7 +24,7 @@ registerForm.addEventListener("submit", async (e) => {
   } catch (err) {
     alert("Erreur : " + err.message);
   }
-  //registerForm.reset();
+  registerForm.reset();
   // Redirige vers la paGE DASHBOARD
 });
 const loginForm = document.querySelector("#loginForm");

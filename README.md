@@ -40,7 +40,7 @@ node server.js
 ## Accès au container PostgreSQL
 
 ```
-docker exec -it gestionnaire_postgres
+docker exec -it gestionnaire_postgres bash
 se connecter  : 
 psql -U admin -d gestionnaire
 voir les tables :
@@ -55,6 +55,9 @@ on peut le faire via node.js :
 const bcrypt = require("bcrypt");
 bcrypt.hash("123456", 10).then(console.log);
 ce qui va renvoyer un hash du mot de passe, qu’on peut ensuite insérer dans la base de données.
+
+pour supprimer un User, une requete sql standard :
+DELETE FROM "Users" WHERE email = 'testFromInsertInto';
 
 ```
 

@@ -18,6 +18,12 @@ loginForm.addEventListener("submit", async (e) => {
       body: JSON.stringify({ email, password }),
     });
 
+    if (res.status === 401) {
+      message.style.display = "block";
+      message.textContent = "Identifiants incorrects. Veuillez réessayer.";
+      return;
+    }
+
     if (!res.ok) {
       message.textContent = "Erreur de connexion";
       return;

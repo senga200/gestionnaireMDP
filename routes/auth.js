@@ -9,9 +9,27 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   const { email, password } = req.body;
   try {
+    // Hachage du MDP
     const hash = await bcrypt.hash(password, 10);
-    await User.create({ email, password: hash });
-    res.status(201).json({ message: "Utilisateur créé" });
+
+    // creation du user
+    const user = await User.create({ email, password: hash });
+
+    // creation du token
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    // Envoi du token dans un cookie HttpOnly
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000, // 1 jour
+    });
+
+    // reponse
+    res.status(201).json({ message: "Utilisateur créé et connecté" });
   } catch (err) {
     console.error(err);
     res.status(400).json({ message: "Erreur lors de l’enregistrement" });
